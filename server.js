@@ -4,8 +4,22 @@ var fs = require('fs');
 var DAY = "day";
 var NIGHT = "night";
 
+
+
 var server = {
-  requestHandler: function (req, res) {
+   var main = function (file, content_type){
+      fs.readFile(file, 'utf8', function (err, data) {
+         res.writeHead(200, { 'Content-Type': content_type});
+         res.end(data);
+      });
+   }
+
+   var get_time = function (){
+      var hour = new Date().getHours();
+      var time = hour > 6 && hour < 20 ? DAY : NIGHT;
+      return time
+   }
+/*  requestHandler: function (req, res) {
     if (req.url === "/") {
       fs.readFile('index.html', 'utf8', function (err, data) {
         res.writeHead(200, { 'Content-Type': 'text/html' });
@@ -29,7 +43,7 @@ var server = {
 
       res.end('{ "time": "' + time + '" }');
     }
-  }
+  }*/
 };
 
 http.createServer(server.requestHandler).listen(4000);

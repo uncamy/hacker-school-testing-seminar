@@ -15,6 +15,18 @@ var mockRes = function(expectedString, done) {
 
   return new http.ServerResponse({});
 };
+//our first try
+var stub_date = function(){
+    Date.prototype.getHours = function(){
+	return 10;
+    }
+}
+tester.test(
+    'should return day', function(done){
+	stub_date();
+	tester.isEqual (server.get_time(), 'day')
+}
+
 
 // Demo async tests
 tester.test(
